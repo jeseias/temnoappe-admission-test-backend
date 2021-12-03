@@ -1,4 +1,5 @@
 import { AddProduct } from '../../../domain/usecases/add-product'
+import { ok } from '../../helpers/http/http-helper'
 import { HttpRequest, HttpResponse } from '../../protocols/http'
 
 export class ProductController {
@@ -8,11 +9,11 @@ export class ProductController {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     const { name, image, description } = httpRequest.body
-    await this.addProduct.add({
+    const account = await this.addProduct.add({
       name,
       image,
       description
     })
-    return new Promise(resolve => resolve(null))
+    return ok(account)
   }
 }
