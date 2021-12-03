@@ -1,6 +1,6 @@
 import { ProductModel } from '../../../domain/models/product'
 import { AddProduct, AddProductModel } from '../../../domain/usecases/add-product'
-import { ok } from '../../helpers/http/http-helper'
+import { ok, serverError } from '../../helpers/http/http-helper'
 import { HttpRequest } from '../../protocols/http'
 import { ProductController } from './product'
 
@@ -59,5 +59,12 @@ describe('Product Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(ok(makeFakeProduct()))
+  })
+
+  it('Should return 500 if AddProduct throws', async () => {
+    const { sut, addProductStub } = makeSut()
+    jest.spyOn(addProductStub, 'add').mockRejectedValueOnce(serverError(new Error('any_error')))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(serverError(new Error('any_error')))
   })
 })
