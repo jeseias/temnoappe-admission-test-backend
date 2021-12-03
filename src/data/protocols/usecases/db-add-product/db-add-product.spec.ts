@@ -52,4 +52,13 @@ describe('DbAddProduct Usecase', () => {
       description: 'any_description'
     })
   })
+
+  it('Should throw if AddProductRepository throw', async () => {
+    const { sut, addProductRepositoryStub } = makeSut()
+    jest.spyOn(addProductRepositoryStub, 'add').mockRejectedValue(
+      new Error()
+    )
+    const promise = sut.add(makeFakeProductData())
+    await expect(promise).rejects.toThrow()
+  })
 })
