@@ -1,7 +1,7 @@
 import { MongoHelper } from '../helpers/mongo-helper'
 import { ProductMongoRepository } from './product'
 
-describe('Account Mongo Repository', () => {
+describe('Product Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
@@ -11,15 +11,15 @@ describe('Account Mongo Repository', () => {
   })
 
   beforeEach(async () => {
-    const accountCollection = await MongoHelper.getCollection('accounts')
-    await accountCollection.deleteMany({})
+    const productCollection = await MongoHelper.getCollection('products')
+    await productCollection.deleteMany({})
   })
 
   const makeSut = (): ProductMongoRepository => {
     return new ProductMongoRepository()
   }
 
-  it('Should return account on success', async () => {
+  it('Should return a product on success', async () => {
     const sut = makeSut()
     const product = await sut.add({
       name: 'any_name',

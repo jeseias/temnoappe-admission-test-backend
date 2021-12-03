@@ -55,7 +55,7 @@ describe('Product Controller', () => {
     })
   })
 
-  it('Should return 200 with account on success', async () => {
+  it('Should return 200 with product on success', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(ok(makeFakeProduct()))

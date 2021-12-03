@@ -10,12 +10,12 @@ export class ProductController {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { name, image, description } = httpRequest.body
-      const account = await this.addProduct.add({
+      const product = await this.addProduct.add({
         name,
         image,
         description
       })
-      return ok(account)
+      return ok(product)
     } catch (error) {
       return serverError(error)
     }

@@ -8,7 +8,7 @@ export class DbAddProduct implements AddProduct {
   ) {}
 
   async add (productData: AddProductModel): Promise<ProductModel> {
-    await this.addProductRepository.add(productData)
-    return new Promise(resolve => resolve(null))
+    const product = await this.addProductRepository.add(productData)
+    return product
   }
 }
