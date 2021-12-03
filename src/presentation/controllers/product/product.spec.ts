@@ -1,9 +1,10 @@
 import { ProductModel } from '../../../domain/models/product'
 import { AddProduct, AddProductModel } from '../../../domain/usecases/add-product'
+import { ok } from '../../helpers/http/http-helper'
 import { HttpRequest } from '../../protocols/http'
 import { ProductController } from './product'
 
-const makeFakeProductModel = (): ProductModel => ({
+const makeFakeProduct = (): ProductModel => ({
   id: 'any_id',
   name: 'any_name',
   image: 'any_image',
@@ -21,7 +22,7 @@ const makeFakeRequest = (): HttpRequest => ({
 const makeAddProduct = (): AddProduct => {
   class AddProductStub implements AddProduct {
     async add (product: AddProductModel): Promise<ProductModel> {
-      return makeFakeProductModel()
+      return makeFakeProduct()
     }
   }
 
@@ -52,5 +53,11 @@ describe('Product Controller', () => {
       image: 'any_image',
       description: 'any_description'
     })
+  })
+
+  it('Should return 200 with account on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(ok(makeFakeProduct()))
   })
 })
