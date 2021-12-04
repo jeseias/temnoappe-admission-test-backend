@@ -1,4 +1,5 @@
 import { ProductModel } from '../../../domain/models/product'
+import { GetProductModel } from '../../../domain/usecases/add-product'
 import { GetProduct } from '../../../domain/usecases/get-product'
 import { ok, serverError } from '../../helpers/http/http-helper'
 import { HttpRequest } from '../../protocols/http'
@@ -19,7 +20,7 @@ const makeFakeRequest = (): HttpRequest => ({
 
 const makeGetProduct = (): GetProduct => {
   class GetProductStub implements GetProduct {
-    async get (productId: string): Promise<ProductModel> {
+    async get (productId: GetProductModel): Promise<ProductModel> {
       return makeFakeProduct()
     }
   }
@@ -55,7 +56,7 @@ describe('GetProductController', () => {
     expect(httpResponse).toEqual(ok(makeFakeProduct()))
   })
 
-  it('Should return 500 if GetProduct throws', async () => {
+  it('Should return 500 if GetProductRepository throws', async () => {
     const { sut, getProductStub } = makeSut()
     jest.spyOn(getProductStub, 'get').mockRejectedValueOnce(serverError(new Error('any_error')))
     const httpResponse = await sut.handle(makeFakeRequest())
