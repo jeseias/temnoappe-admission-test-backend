@@ -1,5 +1,6 @@
 import { ProductModel } from '../models/product'
+import { GetProductModel } from './add-product'
 
 export interface GetProduct {
-  get(productId: string): Promise<ProductModel>
+  get(productId: GetProductModel): Promise<ProductModel>
 }

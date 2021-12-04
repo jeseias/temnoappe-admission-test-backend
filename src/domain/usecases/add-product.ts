@@ -6,6 +6,10 @@ export interface AddProductModel {
   [ProductEnum.Description]: string
 }
 
+export interface GetProductModel {
+  [ProductEnum.Id]: string
+}
+
 export interface AddProduct {
   add (product: AddProductModel): Promise<ProductModel>
 }
