@@ -1,5 +1,5 @@
 import { DbAddProduct } from '../../data/protocols/usecases/db-add-product/db-add-product'
-import { ProductMongoRepository } from '../../infra/db/mongodb/product-repository/product'
+import { ProductMongoRepository } from '../../infra/db/mongodb/add-product-repository/add-product-repository'
 import { AddProductController } from '../../presentation/controllers/product/add-product'
 import { Controller } from '../../presentation/protocols'
 
