@@ -2,7 +2,7 @@ import { ProductModel } from '../../../domain/models/product'
 import { AddProduct, AddProductModel } from '../../../domain/usecases/add-product'
 import { ok, serverError } from '../../helpers/http/http-helper'
 import { HttpRequest } from '../../protocols/http'
-import { ProductController } from './product'
+import { AddProductController } from './add-product'
 
 const makeFakeProduct = (): ProductModel => ({
   id: 'any_id',
@@ -30,13 +30,13 @@ const makeAddProduct = (): AddProduct => {
 }
 
 interface SutTypes {
-  sut: ProductController
+  sut: AddProductController
   addProductStub: AddProduct
 }
 
 const makeSut = (): SutTypes => {
   const addProductStub = makeAddProduct()
-  const sut = new ProductController(addProductStub)
+  const sut = new AddProductController(addProductStub)
   return {
     sut,
     addProductStub

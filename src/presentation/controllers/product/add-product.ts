@@ -1,8 +1,8 @@
 import { AddProduct } from '../../../domain/usecases/add-product'
 import { ok, serverError } from '../../helpers/http/http-helper'
-import { HttpRequest, HttpResponse } from '../../protocols/http'
+import { HttpRequest, HttpResponse, Controller } from '../../protocols'
 
-export class ProductController {
+export class AddProductController implements Controller {
   constructor (
     private readonly addProduct: AddProduct
   ) {}
