@@ -43,7 +43,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('Product Controller', () => {
+describe('AddProductController', () => {
   it('Should call AddProduct with correct values', async () => {
     const { sut, addProductStub } = makeSut()
     const addSpy = jest.spyOn(addProductStub, 'add')
