@@ -13,7 +13,7 @@ const makeFakeProduct = (): ProductModel => ({
 })
 
 const makeFakeRequest = (): HttpRequest => ({
-  body: {
+  params: {
     id: 'any_id'
   }
 })
@@ -47,7 +47,7 @@ describe('GetProductController', () => {
     const { sut, getProductStub } = makeSut()
     const addSpy = jest.spyOn(getProductStub, 'get')
     await sut.handle(makeFakeRequest())
-    expect(addSpy).toHaveBeenCalledWith('any_id')
+    expect(addSpy).toHaveBeenCalledWith({ id: 'any_id' })
   })
 
   it('Should return 200 with product on success', async () => {

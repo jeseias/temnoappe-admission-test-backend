@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
 import { adaptRoute } from '../adapters/express-route-adapter'
-import { makeAddProductController } from '../factories/products'
+import { makeAddProductController, makeGetProductController } from '../factories/products'
 
 export default (router: Router): void => {
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   router.post('/products', adaptRoute(makeAddProductController()))
+  router.get('/products/:id', adaptRoute(makeGetProductController()))
 }

@@ -9,8 +9,8 @@ export class GetProductController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { id } = httpRequest.body
-      const product = await this.getProduct.get(id)
+      const { id } = httpRequest.params
+      const product = await this.getProduct.get({ id })
       return ok(product)
     } catch (error) {
       return serverError(error)

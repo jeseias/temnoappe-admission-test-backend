@@ -1,5 +1,5 @@
 import { MongoHelper } from '../helpers/mongo-helper'
-import { ProductMongoRepository } from './add-product-repository'
+import { AddProductMongoRepository } from './add-product-repository'
 
 describe('Product Mongo Repository', () => {
   beforeAll(async () => {
@@ -15,8 +15,8 @@ describe('Product Mongo Repository', () => {
     await productCollection.deleteMany({})
   })
 
-  const makeSut = (): ProductMongoRepository => {
-    return new ProductMongoRepository()
+  const makeSut = (): AddProductMongoRepository => {
+    return new AddProductMongoRepository()
   }
 
   it('Should return a product on success', async () => {

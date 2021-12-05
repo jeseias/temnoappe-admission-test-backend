@@ -1,6 +1,9 @@
+import { Collection, Document } from 'mongodb'
 import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import app from '../config/app'
+
+let productCollection: Collection<Document>
 
 describe('Signup Routes', () => {
   beforeAll(async () => {
@@ -12,11 +15,11 @@ describe('Signup Routes', () => {
   })
 
   beforeEach(async () => {
-    const productCollection = await MongoHelper.getCollection('products')
+    productCollection = await MongoHelper.getCollection('products')
     await productCollection.deleteMany({})
   })
 
-  it('Should return a product on success', async () => {
+  it('Should return a product when added on success', async () => {
     await request(app)
       .post('/api/products')
       .send({
@@ -24,6 +27,17 @@ describe('Signup Routes', () => {
         image: 'any_image',
         description: 'any_description'
       })
+      .expect(200)
+  })
+
+  it('Should return find an return a product on success', async () => {
+    const result = await productCollection.insertOne({
+      name: 'any_name',
+      image: 'any_image',
+      description: 'any_description'
+    })
+    await request(app)
+      .get(`/api/products/${result.insertedId}`)
       .expect(200)
   })
 })
