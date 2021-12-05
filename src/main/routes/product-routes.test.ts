@@ -30,7 +30,13 @@ describe('Signup Routes', () => {
       .expect(200)
   })
 
-  it('Should return find an return a product on success', async () => {
+  it('Should find and return all products on success', async () => {
+    await request(app)
+      .get('/api/products')
+      .expect(200)
+  })
+
+  it('Should find an return a single product on success', async () => {
     const result = await productCollection.insertOne({
       name: 'any_name',
       image: 'any_image',
