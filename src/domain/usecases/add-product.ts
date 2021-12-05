@@ -7,7 +7,7 @@ export interface AddProductModel {
 }
 
 export interface GetProductModel {
-  [ProductEnum.Id]: string
+  [ProductEnum.Id]: any
 }
 
 export interface AddProduct {
