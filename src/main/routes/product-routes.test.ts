@@ -37,6 +37,7 @@ describe('Signup Routes', () => {
       description: 'any_description'
     })
     await request(app)
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       .get(`/api/products/${result.insertedId}`)
       .expect(200)
   })
