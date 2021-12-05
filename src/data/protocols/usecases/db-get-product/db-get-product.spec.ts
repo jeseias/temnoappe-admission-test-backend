@@ -1,16 +1,16 @@
 import { ProductModel } from '../../../../domain/models/product'
-import { GetProductModel } from '../../../../domain/usecases/add-product'
-import { GetProductRepository } from '../../db/get-product-repository'
+import { GetOneProductModel } from '../../../../domain/usecases/add-product'
+import { LoadProductByIdRepository } from '../../db/load-product-by-id-repository'
 import { DbGetProduct } from './db-get-product'
 
-const makeGetProductRepository = (): GetProductRepository => {
-  class GetProductRepositoryStub implements GetProductRepository {
-    async get (productId: GetProductModel): Promise<ProductModel> {
+const makeLoadProductByIdRepository = (): LoadProductByIdRepository => {
+  class LoadProductByIdRepositoryStub implements LoadProductByIdRepository {
+    async load (string: string): Promise<ProductModel> {
       return new Promise(resolve => resolve(makeFakeProduct()))
     }
   }
 
-  return new GetProductRepositoryStub()
+  return new LoadProductByIdRepositoryStub()
 }
 
 const makeFakeProduct = (): ProductModel => ({
@@ -20,36 +20,36 @@ const makeFakeProduct = (): ProductModel => ({
   description: 'valid_description'
 })
 
-const makeFakeGetProductPayload = (): GetProductModel => ({
+const makeFakeGetProductPayload = (): GetOneProductModel => ({
   id: 'any_id'
 })
 
 interface SutTypes {
   sut: DbGetProduct
-  getProductRepositoryStub: GetProductRepository
+  loadProductByIdRepository: LoadProductByIdRepository
 }
 
 const makeSut = (): SutTypes => {
-  const getProductRepositoryStub = makeGetProductRepository()
-  const sut = new DbGetProduct(getProductRepositoryStub)
+  const loadProductByIdRepository = makeLoadProductByIdRepository()
+  const sut = new DbGetProduct(loadProductByIdRepository)
 
   return {
     sut,
-    getProductRepositoryStub
+    loadProductByIdRepository
   }
 }
 
 describe('DbGetProduct Usecase', () => {
   it('Should call GetProductRepository with correct values', async () => {
-    const { sut, getProductRepositoryStub } = makeSut()
-    const getSpy = jest.spyOn(getProductRepositoryStub, 'get')
+    const { sut, loadProductByIdRepository } = makeSut()
+    const loadSpy = jest.spyOn(loadProductByIdRepository, 'load')
     await sut.get(makeFakeGetProductPayload())
-    expect(getSpy).toHaveBeenCalledWith({ id: 'any_id' })
+    expect(loadSpy).toHaveBeenCalledWith('any_id')
   })
 
   it('Should throw if GetProductRepository throws', async () => {
-    const { sut, getProductRepositoryStub } = makeSut()
-    jest.spyOn(getProductRepositoryStub, 'get').mockRejectedValue(
+    const { sut, loadProductByIdRepository } = makeSut()
+    jest.spyOn(loadProductByIdRepository, 'load').mockRejectedValue(
       new Error()
     )
     const promise = sut.get(makeFakeGetProductPayload())

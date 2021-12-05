@@ -6,7 +6,7 @@ export interface AddProductModel {
   [ProductEnum.Description]: string
 }
 
-export interface GetProductModel {
+export interface GetOneProductModel {
   [ProductEnum.Id]: any
 }
 

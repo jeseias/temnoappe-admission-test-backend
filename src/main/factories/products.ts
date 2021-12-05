@@ -1,9 +1,9 @@
 import { DbAddProduct } from '../../data/protocols/usecases/db-add-product/db-add-product'
 import { DbGetProduct } from '../../data/protocols/usecases/db-get-product/db-get-product'
 import { AddProductMongoRepository } from '../../infra/db/mongodb/add-product-repository/add-product-repository'
-import { GetProductMongoRepository } from '../../infra/db/mongodb/get-product-repository/get-product-repository'
+import { LoadProductByIdMongoRepository } from '../../infra/db/mongodb/load-product-by-id-repository/load-product-by-id-repository'
 import { AddProductController } from '../../presentation/controllers/product/add-product'
-import { GetProductController } from '../../presentation/controllers/product/get-product'
+import { GetOneProductController } from '../../presentation/controllers/product/get-product'
 import { Controller } from '../../presentation/protocols'
 
 export const makeAddProductController = (): Controller => {
@@ -12,8 +12,8 @@ export const makeAddProductController = (): Controller => {
   return new AddProductController(dbAddProduct)
 }
 
-export const makeGetProductController = (): Controller => {
-  const getProductMongoRepository = new GetProductMongoRepository()
-  const dbGetProduct = new DbGetProduct(getProductMongoRepository)
-  return new GetProductController(dbGetProduct)
+export const makeGetOneProductController = (): Controller => {
+  const loadProductByIdMongoRepository = new LoadProductByIdMongoRepository()
+  const dbGetProduct = new DbGetProduct(loadProductByIdMongoRepository)
+  return new GetOneProductController(dbGetProduct)
 }

@@ -1,16 +1,16 @@
 import { ProductModel } from '../../../../domain/models/product'
-import { GetProductModel } from '../../../../domain/usecases/add-product'
-import { GetProduct } from '../../../../domain/usecases/get-product'
-import { GetProductRepository } from '../../db/get-product-repository'
+import { GetOneProductModel } from '../../../../domain/usecases/add-product'
+import { GetOneProduct } from '../../../../domain/usecases/get-one-product'
+import { LoadProductByIdRepository } from '../../db/load-product-by-id-repository'
 
-export class DbGetProduct implements GetProduct {
+export class DbGetProduct implements GetOneProduct {
   constructor (
-    private readonly getProductRepository: GetProductRepository
+    private readonly loadProductByIdRepository: LoadProductByIdRepository
   ) {}
 
-  async get (productId: GetProductModel): Promise<ProductModel> {
+  async get (productId: GetOneProductModel): Promise<ProductModel> {
     const { id } = productId
-    const product = await this.getProductRepository.get({ id })
+    const product = await this.loadProductByIdRepository.load(id)
     return product
   }
 }

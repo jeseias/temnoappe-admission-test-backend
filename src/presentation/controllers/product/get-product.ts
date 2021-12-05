@@ -1,16 +1,16 @@
-import { GetProduct } from '../../../domain/usecases/get-product'
+import { GetOneProduct } from '../../../domain/usecases/get-one-product'
 import { ok, serverError } from '../../helpers/http/http-helper'
 import { Controller, HttpRequest, HttpResponse } from '../../protocols'
 
-export class GetProductController implements Controller {
+export class GetOneProductController implements Controller {
   constructor (
-    private readonly getProduct: GetProduct
+    private readonly getOneProduct: GetOneProduct
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { id } = httpRequest.params
-      const product = await this.getProduct.get({ id })
+      const product = await this.getOneProduct.get({ id })
       return ok(product)
     } catch (error) {
       return serverError(error)

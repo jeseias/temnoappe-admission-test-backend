@@ -1,6 +1,6 @@
 import { Collection, Document } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { GetProductMongoRepository } from './get-product-repository'
+import { LoadProductByIdMongoRepository } from './load-product-by-id-repository'
 
 let productCollection: Collection<Document>
 
@@ -18,8 +18,8 @@ describe('Product Mongo Repository', () => {
     await productCollection.deleteMany({})
   })
 
-  const makeSut = (): GetProductMongoRepository => {
-    return new GetProductMongoRepository()
+  const makeSut = (): LoadProductByIdMongoRepository => {
+    return new LoadProductByIdMongoRepository()
   }
 
   it('Should return a product on success', async () => {
@@ -29,9 +29,7 @@ describe('Product Mongo Repository', () => {
       image: 'any_image',
       description: 'any_description'
     })
-    const product = await sut.get({
-      id: result.insertedId
-    })
+    const product = await sut.load(String(result.insertedId))
 
     expect(product).toBeTruthy()
     expect(product.id).toBeTruthy()
