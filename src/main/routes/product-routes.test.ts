@@ -47,4 +47,16 @@ describe('Signup Routes', () => {
       .get(`/api/products/${result.insertedId}`)
       .expect(200)
   })
+
+  it('Should find a single product and delete on success', async () => {
+    const result = await productCollection.insertOne({
+      name: 'any_name',
+      image: 'any_image',
+      description: 'any_description'
+    })
+    await request(app)
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      .delete(`/api/products/${result.insertedId}`)
+      .expect(200)
+  })
 })
